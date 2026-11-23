@@ -1,0 +1,4 @@
+interface:
+  display_name: "实物量确认书"
+  short_description: "按原模板编制实物量确认书，拆分主材并逐项核对材料进出台账"
+  default_prompt: "使用 $shiwu-liang-queren-shu，按文件夹中的原模板和工程量清单编制实物量确认书与材料台账，核对规格来源、材料用量和两表一致性。"

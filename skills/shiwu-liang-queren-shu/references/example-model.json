@@ -1,0 +1,63 @@
+{
+  "schema_version": "physical-materials/1",
+  "display": {
+    "default_decimals": 3,
+    "unit_decimals": {"个": 0, "台班": 2},
+    "rounding": "ROUND_HALF_UP"
+  },
+  "decisions": {
+    "ledger_mode": "equal_adopted",
+    "equal_adopted_authorized": true,
+    "dates": "blank",
+    "blank_dates_authorized": true,
+    "policy_refs": ["synthetic:user-instruction/equal-columns-and-blank-dates"]
+  },
+  "works": [
+    {"id": "W1", "name": "管材安装", "qty": "10", "unit": "m", "source_refs": ["synthetic:boq/row-1"]},
+    {"id": "W2", "name": "成品设备安装", "qty": "2", "unit": "台", "source_refs": ["synthetic:boq/row-2"]},
+    {"id": "W3", "name": "零星饰面修复", "qty": "6", "unit": "m²", "source_refs": ["synthetic:boq/row-3"]}
+  ],
+  "owner_lines": [
+    {"id": "O1", "qty": "2", "unit": "个", "basis": "issued", "source_refs": ["synthetic:owner-record/row-1"]}
+  ],
+  "materials": [
+    {
+      "id": "M1", "work_ids": ["W1"], "name": "示例管材", "spec": "DN20", "unit": "m",
+      "kind": "main", "qty": "10", "source_refs": ["synthetic:calculation/pipe-length"],
+      "spec_refs": ["synthetic:specification/pipe"], "quantity_basis": "estimated", "owner_line_id": null,
+      "loss": {"rate": "0.02", "already_in_quota": false, "refs": ["synthetic:loss-basis/pipe"]},
+      "indivisible": false, "scope_key": "zone-a",
+      "formula": "示例净用量10m；额外损耗率2%由独立示例依据给定。",
+      "assumptions": "纯虚构演示，不构成任何真实材料损耗率建议。"
+    },
+    {
+      "id": "M2", "work_ids": ["W2"], "name": "示例成品设备", "spec": "型号A", "unit": "个",
+      "kind": "main", "qty": "2", "source_refs": ["synthetic:owner-record/row-1"],
+      "spec_refs": ["synthetic:certificate/device"], "quantity_basis": "owner_actual", "owner_line_id": "O1",
+      "loss": {"rate": "0", "already_in_quota": false, "refs": []},
+      "indivisible": true, "scope_key": "zone-a"
+    },
+    {
+      "id": "M3", "work_ids": ["W3"], "name": "示例饰面板", "spec": null, "unit": "m²",
+      "kind": "main", "qty": null, "source_refs": ["synthetic:boq/row-3"],
+      "spec_refs": [], "quantity_basis": "estimated", "owner_line_id": null,
+      "loss": {"rate": "0", "already_in_quota": false, "refs": []},
+      "indivisible": false, "scope_key": "zone-a-pending-panel",
+      "pending_reason": "尚无板材规格和排版用量；施工面积不能直接视为板材消耗。"
+    },
+    {
+      "id": "M4", "work_ids": ["W1"], "name": "示例辅材", "spec": "规格B", "unit": "kg",
+      "kind": "auxiliary", "qty": "0.5", "source_refs": ["synthetic:calculation/auxiliary"],
+      "spec_refs": ["synthetic:specification/auxiliary"], "quantity_basis": "estimated", "owner_line_id": null,
+      "loss": {"rate": "0", "already_in_quota": true, "refs": ["synthetic:quota/auxiliary-inclusive"]},
+      "indivisible": false, "scope_key": "zone-a"
+    },
+    {
+      "id": "M5", "work_ids": ["W2"], "name": "示例吊装机械", "spec": "额定起重量5t", "unit": "台班",
+      "kind": "machine", "qty": "1.5", "source_refs": ["synthetic:calculation/machine"] ,
+      "spec_refs": ["synthetic:equipment/machine"], "quantity_basis": "estimated", "owner_line_id": null,
+      "loss": {"rate": "0", "already_in_quota": false, "refs": []},
+      "indivisible": false, "scope_key": "zone-a"
+    }
+  ]
+}
